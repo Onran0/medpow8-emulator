@@ -13,8 +13,8 @@ public class Processor {
     private byte getValue(Operand op) {
         byte value;
 
-        if(op.isRegister()) value = emulator.getRegister(op.getValue());
-        else value = (byte) op.getValue();
+        if(op.isRegister()) value = emulator.getRegister(op.getIntValue());
+        else value = (byte) op.getIntValue();
 
         if(op.isPointer())
             value = emulator.getMemory()[value & 0xFF];
@@ -34,7 +34,7 @@ public class Processor {
         if(dest.isPointer()) {
             int addr = getValue(dest) & 0xFF;
             emulator.getMemory()[addr] = value;
-        } else emulator.setRegister(dest.getValue(), value);
+        } else emulator.setRegister(dest.getIntValue(), value);
     }
 
     public void processCommand(Command command) {
